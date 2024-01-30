@@ -1,29 +1,35 @@
 package nestedlinkedlist
 
+import "fmt"
+
 type NestedLinkedListService struct {
 	nestedLinkedList *NestedLinkedList
 }
 
 func NewNestedLinkedListService() *NestedLinkedListService {
 	return &NestedLinkedListService{
-		nestedLinkedList: nil,
+		nestedLinkedList: NewNestedLinkedList(),
 	}
 }
 
-func (service *NestedLinkedListService) addData(value *int) {
+func (service *NestedLinkedListService) AddData(value *int) {
 
 	if service.nestedLinkedList != nil {
+
+		fmt.Print("Non-nil nested linked list. \n")
 
 		tempNestedLinkedList := service.nestedLinkedList
 
 		tempLinkedList := tempNestedLinkedList.linkedList
 
-		// find the right category to add the new node
-		for tempLinkedList.headNode.nextNode.data != *value {
+		if tempLinkedList != nil {
+			// find the right category to add the new node
+			for tempLinkedList.headNode.nextNode.data != *value {
 
-			tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
-			tempLinkedList = tempNestedLinkedList.linkedList
-
+				tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
+				tempLinkedList = tempNestedLinkedList.linkedList
+			}
+			tempLinkedList.Add(value)
 		}
 
 		tempLinkedList.Add(value)
@@ -33,11 +39,19 @@ func (service *NestedLinkedListService) addData(value *int) {
 
 	// create new category for requested value
 
-	tempLinkedList := NewLinkedList()
+	fmt.Print("Nil nested linked list. \n")
 
-	tempNestedLinkedList := NewNestedLinkedList()
+	tempLinkedList := NewLinkedList()
 
 	tempLinkedList.Add(value)
 
-	tempNestedLinkedList.Add(tempLinkedList)
+	fmt.Print("After adding linked list to nested linked list.")
+}
+
+func (service *NestedLinkedListService) FindAll() {
+
+	if service.nestedLinkedList != nil {
+		service.nestedLinkedList.FindAll()
+	}
+
 }

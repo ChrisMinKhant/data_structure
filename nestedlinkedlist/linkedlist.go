@@ -1,5 +1,9 @@
 package nestedlinkedlist
 
+import (
+	"fmt"
+)
+
 type LinkedList struct {
 	headNode *Node
 }
@@ -38,4 +42,20 @@ func (linkedList *LinkedList) Add(data *int) {
 		data:     *data,
 		nextNode: nil,
 	}
+}
+
+func (linkedList *LinkedList) FindAll() {
+	if linkedList.headNode.nextNode != nil {
+		tempNode := linkedList.headNode.nextNode
+
+		fmt.Printf("Fetched node value : %v", tempNode.data)
+
+		for tempNode.nextNode != nil {
+			fmt.Printf("Fetched node value : %v", tempNode.nextNode.data)
+
+			tempNode = tempNode.nextNode
+		}
+	}
+
+	fmt.Print("There is no value.")
 }

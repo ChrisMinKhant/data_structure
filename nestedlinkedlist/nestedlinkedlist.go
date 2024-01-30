@@ -33,3 +33,14 @@ func (nestedLinkedList *NestedLinkedList) Add(linkedList *LinkedList) {
 		nextNestedLinkedList: nil,
 	}
 }
+
+func (nestedLinkedList *NestedLinkedList) FindAll() {
+	tempNestedLinkedList := nestedLinkedList
+
+	for tempNestedLinkedList.linkedList != nil {
+
+		tempNestedLinkedList.linkedList.FindAll()
+
+		tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
+	}
+}
