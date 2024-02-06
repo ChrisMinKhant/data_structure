@@ -30,6 +30,7 @@ func (linkedList *LinkedList) Add(data *int) {
 			tempNode = tempNode.nextNode
 		}
 
+		fmt.Print(" Line -> 33 | Node is added. \n")
 		tempNode.nextNode = &Node{
 			data:     *data,
 			nextNode: nil,
@@ -38,24 +39,25 @@ func (linkedList *LinkedList) Add(data *int) {
 		return
 	}
 
+	fmt.Print(" Line -> 42 | Node is added. \n")
 	linkedList.headNode.nextNode = &Node{
 		data:     *data,
 		nextNode: nil,
 	}
+
+	fmt.Printf(" Added value : %v \n", linkedList.headNode.nextNode.data)
 }
 
 func (linkedList *LinkedList) FindAll() {
 	if linkedList.headNode.nextNode != nil {
 		tempNode := linkedList.headNode.nextNode
 
-		fmt.Printf("Fetched node value : %v", tempNode.data)
+		fmt.Printf("Fetched node value : %v \n", tempNode.data)
 
 		for tempNode.nextNode != nil {
-			fmt.Printf("Fetched node value : %v", tempNode.nextNode.data)
+			fmt.Printf("Fetched node value : %v \n", tempNode.nextNode.data)
 
 			tempNode = tempNode.nextNode
 		}
 	}
-
-	fmt.Print("There is no value.")
 }

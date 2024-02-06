@@ -14,43 +14,79 @@ func NewNestedLinkedListService() *NestedLinkedListService {
 
 func (service *NestedLinkedListService) AddData(value *int) {
 
-	if service.nestedLinkedList != nil {
+	tempNestedLinkedList := service.nestedLinkedList
 
-		fmt.Print("Non-nil nested linked list. \n")
-
-		tempNestedLinkedList := service.nestedLinkedList
+	for tempNestedLinkedList != nil {
 
 		tempLinkedList := tempNestedLinkedList.linkedList
 
 		if tempLinkedList != nil {
-			// find the right category to add the new node
-			for tempLinkedList.headNode.nextNode.data != *value {
+			if tempLinkedList.headNode.nextNode != nil {
+				if tempLinkedList.headNode.nextNode.data == *value {
 
-				tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
-				tempLinkedList = tempNestedLinkedList.linkedList
+					fmt.Printf("Found a category for value : %v \n", *value)
+
+					tempLinkedList.Add(value)
+
+					return
+				}
+			} else {
+				tempLinkedList.Add(value)
+
+				return
 			}
-			tempLinkedList.Add(value)
+
+			tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
+
+			continue
 		}
+
+		tempLinkedList = NewLinkedList()
 
 		tempLinkedList.Add(value)
 
+		tempNestedLinkedList.Add(tempLinkedList)
+
 		return
 	}
-
-	// create new category for requested value
-
-	fmt.Print("Nil nested linked list. \n")
 
 	tempLinkedList := NewLinkedList()
 
 	tempLinkedList.Add(value)
 
-	fmt.Print("After adding linked list to nested linked list.")
+	tempNestedLinkedList.Add(tempLinkedList)
+
+	// fmt.Print("Nested linked list is empty. \n")
+
+	// tempLinkedList := tempNestedLinkedList.linkedList
+
+	// if tempLinkedList != nil {
+	// 	if tempLinkedList.headNode.nextNode != nil {
+	// 		if tempLinkedList.headNode.nextNode.data == *value {
+
+	// 			fmt.Printf("Found a category for value : %v \n", *value)
+
+	// 			tempLinkedList.Add(value)
+
+	// 			return
+	// 		}
+	// 	}
+	// } else {
+
+	// 	fmt.Printf("Does not found a category for value : %v \n", *value)
+
+	// 	tempLinkedList = NewLinkedList()
+	// 	tempLinkedList.Add(value)
+
+	// 	return
+	// }
+
 }
 
 func (service *NestedLinkedListService) FindAll() {
 
 	if service.nestedLinkedList != nil {
+		fmt.Print("Finding all value ...")
 		service.nestedLinkedList.FindAll()
 	}
 
