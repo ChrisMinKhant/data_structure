@@ -1,7 +1,5 @@
 package nestedlinkedlist
 
-import "fmt"
-
 /*
 *	Nested linked list struct which is the basic component of
 *	the structure.
@@ -23,35 +21,31 @@ func NewNestedLinkedList() *NestedLinkedList {
 *	Add new linked list to the nested linked list
 *	Time complexity of O(n)
  */
-func (nestedLinkedList *NestedLinkedList) Add(linkedList *LinkedList) {
+func (nestedLinkedList *NestedLinkedList) Add(requestedLinkedList *LinkedList) {
 	tempNestedLinkedList := nestedLinkedList
 
-	if tempNestedLinkedList.linkedList != nil {
-		for tempNestedLinkedList.nextNestedLinkedList != nil {
-			tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
+	if tempNestedLinkedList != nil {
+		if tempNestedLinkedList.linkedList != nil {
+			for tempNestedLinkedList.nextNestedLinkedList != nil {
+				tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
+			}
+
+			tempNestedLinkedList.nextNestedLinkedList = &NestedLinkedList{
+				linkedList:           requestedLinkedList,
+				nextNestedLinkedList: nil,
+			}
+
+			return
 		}
 
-		tempNestedLinkedList.nextNestedLinkedList = &NestedLinkedList{
-			linkedList:           linkedList,
-			nextNestedLinkedList: nil,
-		}
-
-		return
+		tempNestedLinkedList.linkedList = requestedLinkedList
 	}
-
-	tempNestedLinkedList.linkedList = linkedList
-
 }
 
 func (nestedLinkedList *NestedLinkedList) FindAll() {
 	tempNestedLinkedList := nestedLinkedList
 
-	loopCount := 1
-
 	for tempNestedLinkedList.linkedList != nil {
-
-		fmt.Printf(" Loop Count : %v \n", loopCount)
-		loopCount++
 
 		tempNestedLinkedList.linkedList.FindAll()
 

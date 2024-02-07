@@ -7,10 +7,12 @@ func main() {
 	nllService := nestedlinkedlist.NewNestedLinkedListService()
 
 	dataOne := 6
-	dataTwo := 8
+	dataTwo := 6
+	dataThree := 6
 
 	nllService.AddData(&dataOne)
 	nllService.AddData(&dataTwo)
+	nllService.AddData(&dataThree)
 
 	nllService.FindAll()
 }
