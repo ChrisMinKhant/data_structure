@@ -61,11 +61,6 @@ func (service *NestedLinkedListService) AddData(value *int) {
 				// Because, we can easily know that the linked list is the right category for the
 				// value to be added, just by checking the first node.
 
-			} else {
-
-				tempLinkedList.Add(value)
-
-				return
 			}
 
 			// Swap the temporary nested linked list with the next nested linked list,
@@ -111,4 +106,58 @@ func (service *NestedLinkedListService) FindAll() {
 		service.nestedLinkedList.FindAll()
 	}
 
+}
+
+/*
+*	Delete the whole category finding by the given value
+ */
+func (service *NestedLinkedListService) DeleteCategory(value *int) {
+
+	// find the value in the category which is linked list of the nested linked list
+	// change found linked list pointing to nil
+	// do nothing if given category was not found
+
+	tempNestedLinkedList := service.nestedLinkedList
+
+	// Iterates through to the end of the nested linked list.
+	// By then, we will get separate nested linked list to concern.
+	for tempNestedLinkedList != nil {
+
+		tempLinkedList := tempNestedLinkedList.linkedList
+
+		// Check if the linked list of the nested linked list is nil.
+		// This if-statement is to ensure that there is intialized linked list inside
+		// the nested linked list, to avoid nil pointer exception.
+		if tempLinkedList != nil {
+
+			// Check if the next node right after the head node the linked list is nil.
+			if tempLinkedList.headNode.nextNode != nil {
+
+				// Check if the value of the next node is equal to the value to be added.
+				if tempLinkedList.headNode.nextNode.data == *value {
+
+					fmt.Printf("Found a category for value : %v \n", *value)
+
+					tempNestedLinkedList.linkedList = nil
+
+					return
+				}
+
+				// We will checking only the value of the first node right after the head node.
+				// Because, we can easily know that the linked list is the right category for the
+				// value to be added, just by checking the first node.
+
+			}
+
+			// Swap the temporary nested linked list with the next nested linked list,
+			// only if there is one.
+			if tempNestedLinkedList.nextNestedLinkedList != nil {
+
+				tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
+
+				continue
+			}
+
+		}
+	}
 }
