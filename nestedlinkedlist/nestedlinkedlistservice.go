@@ -138,26 +138,30 @@ func (service *NestedLinkedListService) DeleteCategory(value *int) {
 
 					fmt.Printf("Found a category for value : %v \n", *value)
 
+					// Ovride the current nested linked list data with the next one.
+					// By doing so, we achive deletion of current linked list.
+					if tempNestedLinkedList.nextNestedLinkedList != nil && tempNestedLinkedList.nextNestedLinkedList.linkedList != nil {
+
+						fmt.Print(" Sawapped values of current nested linked list. \n")
+
+						tempNestedLinkedList.linkedList = tempNestedLinkedList.nextNestedLinkedList.linkedList
+						tempNestedLinkedList.nextNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList.nextNestedLinkedList
+
+						return
+					}
+
+					fmt.Print(" Set current nested linked list to nil. \n ")
+					// There is no next nested linked list.
+					//Therefore, it is safe to set current nested linked list 'nil'.
 					tempNestedLinkedList.linkedList = nil
+					tempNestedLinkedList.nextNestedLinkedList = nil
 
 					return
 				}
-
-				// We will checking only the value of the first node right after the head node.
-				// Because, we can easily know that the linked list is the right category for the
-				// value to be added, just by checking the first node.
-
 			}
-
-			// Swap the temporary nested linked list with the next nested linked list,
-			// only if there is one.
-			if tempNestedLinkedList.nextNestedLinkedList != nil {
-
-				tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
-
-				continue
-			}
-
 		}
+
+		// Swap current nested linked with the next one to iterate.
+		tempNestedLinkedList = tempNestedLinkedList.nextNestedLinkedList
 	}
 }
